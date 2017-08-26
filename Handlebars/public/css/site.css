@@ -1,0 +1,104 @@
+body {
+    width: 960px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: red
+}
+
+.menu {
+    list-style-type: none;
+    padding-left: 0;
+}
+.menu li {
+    display: inline-block
+}
+.menu li:after {
+    content: "\00a0";
+}
+
+.chat-area {
+    background-color: rgb(178, 213, 255);
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 25px;
+}
+
+.outer {
+    width: 70%;
+    min-height: 200px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: solid 1px grey;
+    border-radius: 10px;
+    position: relative;
+}
+
+.outer>div {
+    width: 70%;
+}
+
+.outer .likes-block {
+    width: 120px;
+}
+
+.recipient-color {
+    background-color: #ddcaff;
+}
+
+.owner-color {
+    margin-left: 27%;
+    background-color: #94e5b0;
+}
+
+.home-view-messages {
+    text-align: right;
+    padding-right: 20px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.likes-block {
+    background-color: lightgray;
+    width: 120px;
+    border: solid 1px purple;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+}
+
+.likes-block img {
+    width: 30px;
+    vertical-align: middle;
+}
+
+.likes-block img {
+    margin: 15px 0;
+}
+
+.avatar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.avatar-holder {
+    position: relative;
+}
+
+.avatar-user-menu {
+    width: 50px;
+    position: absolute;
+    top: -15px;
+    right: -50px;
+}
