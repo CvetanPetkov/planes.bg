@@ -1,13 +1,22 @@
-<form action="/users/login" method="POST">
-    Username
-    <input type="text" name="username" />
-    <br />
-    Password
-    <input type="password" name="password" />
-    <br />
-    <input type="submit" value="Login" />
-</form>
+<article class="login-form clearfix overflow">
+    <p>All fields are required</p>
 
-{{#if globalError}}
-    <h3>{{globalError}}</h3>
-{{/if}}
+    <form action="/users/login" method="POST">
+        <div class="input-wrapper">
+            <label for="firstName">First name:</label>
+            <input type="text" name="firstName" id="firstName" placeholder="First name" />
+        </div>
+
+        <div class="input-wrapper">
+            <label for="lastName">Last name:</label>
+            <input type="text" name="lastName" id="lastName" placeholder="Last name" />
+        </div>
+
+        <div class="input-wrapper">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" placeholder="Password" />
+        </div>
+
+        <input type="submit" value="Login" class="right" />
+    </form>
+</article>

@@ -6,9 +6,14 @@ let upload = multer({dest: './public/avatars'})
 
 module.exports = (app) => {
   app.get('/', controllers.home.indexGet)
+  app.get('/latest', controllers.home.latestGet)
   app.get('/search', controllers.home.searchGet)
+  app.post('/search', controllers.home.searchPost)
+  app.get('/article/create', controllers.home.articleCreate)
 
+  app.get('/users/register', controllers.users.registerGet)
   app.post('/users/register', upload.single('avatar'), controllers.users.registerPost)
+  app.get('/users/login', controllers.users.loginGet)
   app.post('/users/login', controllers.users.loginPost)
   app.post('/users/logout', controllers.users.logout)
   app.get('/users/profile/:user', auth.isAuthenticated, controllers.users.profileGet)

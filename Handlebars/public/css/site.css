@@ -1,84 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+html, body {
+    min-height: 100%;
+}
+
 body {
-    width: 960px;
-    margin: 0 auto;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    background: #eaf0f1;
 }
 
 h1 {
-    color: red
+    text-align: center;
+    background-color: #fff;
+    padding: 30px;
 }
 
 .menu {
-    list-style-type: none;
-    padding-left: 0;
-}
-.menu li {
-    display: inline-block
-}
-.menu li:after {
-    content: "\00a0";
+    justify-content: center;
+    margin-bottom: 20px;
+    background: #fff;
 }
 
-.chat-area {
-    background-color: rgb(178, 213, 255);
-    border-radius: 15px;
-    padding: 15px;
-    margin-top: 25px;
+.menu li:not(:first-child) {
+    margin-left: 20px;
 }
 
-.outer {
-    width: 70%;
-    min-height: 200px;
-    margin-bottom: 15px;
-    padding: 10px;
-    border: solid 1px grey;
-    border-radius: 10px;
-    position: relative;
+.menu li:not(.spacer) {
+    background: #696969;
+    font-size: 1.1rem;
+    color: #fff;
+    padding: 7px 12px;
+    border-radius: 10px 10px 0 0;
 }
 
-.outer>div {
-    width: 70%;
+.menu li:not(.spacer):hover {
+    background: #eaf0f1;
+    color: #696969;
 }
 
-.outer .likes-block {
+.menu li.selected {
+    background: #eaf0f1;
+    color: #696969;
+}
+
+.menu .spacer {
     width: 120px;
-}
-
-.recipient-color {
-    background-color: #ddcaff;
-}
-
-.owner-color {
-    margin-left: 27%;
-    background-color: #94e5b0;
-}
-
-.home-view-messages {
-    text-align: right;
-    padding-right: 20px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}
-
-.likes-block {
-    background-color: lightgray;
-    width: 120px;
-    border: solid 1px purple;
-    border-radius: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    position: absolute;
-    bottom: -1px;
-    right: -1px;
-}
-
-.likes-block img {
-    width: 30px;
-    vertical-align: middle;
-}
-
-.likes-block img {
-    margin: 15px 0;
 }
 
 .avatar {
@@ -101,4 +68,62 @@ h1 {
     position: absolute;
     top: -15px;
     right: -50px;
+}
+
+.login-form {
+    width: 305px;
+    margin-left: 60px;
+}
+
+.register-form .flex {
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+fieldset {
+    margin-left: 5%;
+    width: 45%;
+    border: 0;
+}
+
+.login-form p,
+.register-form p {
+    color: #f1457e;
+}
+
+.input-wrapper {
+    margin: 20px 0;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+}
+
+.input-wrapper input {
+    width: 200px;
+    padding: 5px;
+    border: solid 1px #696969;
+    border-radius: 0 7px 7px 0;
+    outline: none;
+}
+
+input[type="submit"] {
+    background: #7988f1;
+    border: 0;
+    padding: 7px 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.register-form input[type="submit"] {
+    margin-left: auto;
+    margin-right: calc(45% - 305px);
+}
+
+input[type="file"]{
+    border: none;
 }

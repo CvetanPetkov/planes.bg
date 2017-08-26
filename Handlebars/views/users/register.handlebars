@@ -1,21 +1,44 @@
-<form action="/users/register" method="POST" enctype="multipart/form-data">
-  Username
-  <input type="text" name="username" />
-  <br />
-  Password
-  <input type="password" name="password" />
-  <br />
-  First Name
-  <input type="text" name="firstName" />
-  <br />
-  Last Name
-  <input type="text" name="lastName" />
-  <br />
-  Avatar
-  <input type="file" accept="image/*" name="avatar" />
-  <input type="submit" value="Register" />
-</form>
+<article class="register-form clearfix overflow">
+    <form action="/users/register" method="POST" class="flex">
+        <fieldset>
+            <p>Required fields</p>
 
-{{#if globalError}}
-  <h3>{{globalError}}</h3>
-{{/if}}
+
+            <div class="input-wrapper">
+                <label for="firstName">First name:</label>
+                <input type="text" name="firstName" id="firstName" placeholder="First name"/>
+            </div>
+
+            <div class="input-wrapper">
+                <label for="lastName">Last name:</label>
+                <input type="text" name="lastName" id="lastName" placeholder="Last name"/>
+            </div>
+
+            <div class="input-wrapper">
+                <label for="location">Location:</label>
+                <input type="text" name="location" id="location" placeholder="Location/Address"/>
+            </div>
+
+            <div class="input-wrapper">
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" placeholder="Password"/>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <p>Optional fields</p>
+
+            <div class="input-wrapper">
+                <label for="company">Company:</label>
+                <input type="text" name="company" id="company" placeholder="Company"/>
+            </div>
+
+            <div class="input-wrapper">
+                <label for="avatar">Avatar:</label>
+                <input type="file" name="avatar" id="avatar" />
+            </div>
+        </fieldset>
+
+        <input type="submit" value="Register" />
+    </form>
+</article>

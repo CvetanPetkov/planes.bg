@@ -14,8 +14,7 @@ let userSchema = new mongoose.Schema({
     required: REQUIRED_VALIDATION_MESSAGE
   },
   company: {
-    type: types.String,
-    required: REQUIRED_VALIDATION_MESSAGE
+    type: types.String
   },
   location: {
     type: types.String,

@@ -4,6 +4,9 @@ const User = mongoose.model('User')
 const errorHandler = require('../utilities/error-handler')
 
 module.exports = {
+  registerGet: (req, res) => {
+    res.render('users/register')
+  },
   registerPost: (req, res) => {
     UserActions
       .create(req)
@@ -21,6 +24,9 @@ module.exports = {
         let message = errorHandler.handleMongooseError(err)
         console.log(message)
       })
+  },
+  loginGet: (req, res) => {
+    res.render('users/login')
   },
   loginPost: (req, res) => {
     console.log('loginPost')
