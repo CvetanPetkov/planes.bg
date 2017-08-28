@@ -4,5 +4,9 @@ module.exports = {
     let message = err.errors[firstKey].message
 
     return message
+  },
+  handleValidationError: (req, res, errMsg, url) => {
+    res.locals.globalError = errMsg
+    return res.render(url, req.body)
   }
 }

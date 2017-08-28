@@ -119,6 +119,10 @@ input[type="submit"] {
     cursor: pointer;
 }
 
+input[type="submit"]:hover {
+    background: #9da2f1;
+}
+
 .register-form input[type="submit"] {
     margin-left: auto;
     margin-right: calc(45% - 305px);
