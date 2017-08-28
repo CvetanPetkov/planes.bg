@@ -1,4 +1,4 @@
-<article class="register-form clearfix overflow">
+<article class="register-form clearfix overflow" style="width: 1260px; margin: 0 auto">
     <form action="/users/register" method="POST" class="flex">
         <fieldset>
             <p>Required fields</p>
@@ -6,22 +6,27 @@
 
             <div class="input-wrapper">
                 <label for="firstName">First name:</label>
-                <input type="text" name="firstName" id="firstName" placeholder="First name"/>
+                <input type="text" name="firstName" id="firstName" placeholder="First name" value="{{firstName}}" />
             </div>
 
             <div class="input-wrapper">
                 <label for="lastName">Last name:</label>
-                <input type="text" name="lastName" id="lastName" placeholder="Last name"/>
+                <input type="text" name="lastName" id="lastName" placeholder="Last name" value="{{lastName}}" />
             </div>
 
             <div class="input-wrapper">
                 <label for="location">Location:</label>
-                <input type="text" name="location" id="location" placeholder="Location/Address"/>
+                <input type="text" name="location" id="location" placeholder="Location/Address" value="{{location}}" />
             </div>
 
             <div class="input-wrapper">
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="password" placeholder="Password"/>
+                <input type="password" name="password" id="password" placeholder="Password" value="{{password}}" />
+            </div>
+
+            <div class="input-wrapper">
+                <label for="confirmPassword">Confirm password:</label>
+                <input type="password" name="confirmPassword" id="ConfirmPassword" placeholder="Confirm password" value="{{confirmPassword}}" />
             </div>
         </fieldset>
 
@@ -30,12 +35,12 @@
 
             <div class="input-wrapper">
                 <label for="company">Company:</label>
-                <input type="text" name="company" id="company" placeholder="Company"/>
+                <input type="text" name="company" id="company" placeholder="Company" value="{{company}}" />
             </div>
 
             <div class="input-wrapper">
                 <label for="avatar">Avatar:</label>
-                <input type="file" name="avatar" id="avatar" />
+                <input type="file" name="avatar" id="avatar" value="{{avatar}}" />
             </div>
         </fieldset>
 

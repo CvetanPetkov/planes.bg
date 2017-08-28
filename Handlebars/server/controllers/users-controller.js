@@ -1,32 +1,89 @@
 const mongoose = require('mongoose')
 const User = mongoose.model('User')
 
+const encryption = require('../utilities/encryption')
 const errorHandler = require('../utilities/error-handler')
 
 module.exports = {
   registerGet: (req, res) => {
-    res.render('users/register')
+    res.render('users/register', {register: true, style: 'selected'})
   },
   registerPost: (req, res) => {
-    UserActions
-      .create(req)
-      .then((user) => {
-        req.login(user, (err, user) => {
-          if (err) {
-            let message = errorHandler.handleMongooseError(err)
-            console.log(message)
-          }
+    console.log(req.body)
 
-          res.redirect('/')
-        })
-      })
-      .catch((err) => {
-        let message = errorHandler.handleMongooseError(err)
-        console.log(message)
-      })
+    //  Required fields
+    // TODO common function to init fields
+    let firstName = req.body.firstName || null
+    if (!firstName) {
+      errorHandler.handleValidationError(req, res, 'First name is required', 'users/register')
+      return
+    }
+
+    let lastName = req.body.lastName || null
+    if (!lastName) {
+      errorHandler.handleValidationError(req, res, 'Last name is required', 'users/register')
+      return
+    }
+
+    let location = req.body.location || null
+    if (!location) {
+      errorHandler.handleValidationError(req, res, 'Location is required', 'users/register')
+      return
+    }
+
+    let password = req.body.password || null
+    if (!password) {
+      errorHandler.handleValidationError(req, res, 'Password is required', 'users/register')
+      return
+    }
+
+    let confirmPassword = req.body.confirmPassword || null
+    if (!confirmPassword) {
+      errorHandler.handleValidationError(req, res, 'Confirm password is required', 'users/register')
+      return
+    }
+
+    let hashedPassword = null
+    if (password === confirmPassword) {
+      let salt = encryption.generateSalt()
+      hashedPassword = encryption.generateHashedPassword(salt, req.body.password)
+    } else {
+      errorHandler.handleValidationError(req, res, 'Passwords don`t match', 'users/register')
+      return
+    }
+
+    //  Optional fields
+    let company = req.body.company || null
+    let avatar = req.body.avatar || null
+
+    let userObj = {
+      firstName: firstName,
+      lastName: lastName,
+      location: location,
+      hashedPass: hashedPassword,
+      company: company,
+      avatar: avatar
+    }
+
+    // UserActions
+    //   .create(req)
+    //   .then((user) => {
+    //     req.login(user, (err, user) => {
+    //       if (err) {
+    //         let message = errorHandler.handleMongooseError(err)
+    //         console.log(message)
+    //       }
+    //
+    //       res.redirect('/')
+    //     })
+    //   })
+    //   .catch((err) => {
+    //     let message = errorHandler.handleMongooseError(err)
+    //     console.log(message)
+    //   })
   },
   loginGet: (req, res) => {
-    res.render('users/login')
+    res.render('users/login', {login: true, style: 'selected'})
   },
   loginPost: (req, res) => {
     console.log('loginPost')

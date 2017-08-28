@@ -5,15 +5,16 @@
     <link href="/css/reset.css" type="text/css" rel="stylesheet" />
     <link href="/css/site.css" type="text/css" rel="stylesheet" />
     <link rel="shortcut icon" type="image/png" href="/icons/military_16-128.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <div class="container">
     <h1>Planes.bg - all planes in one place</h1>
 
     <ul class="menu flex">
-        <li class="selected" id="home"><a href="/">Home</a></li>
-        <li id="latest"><a href="/latest">Latest articles</a></li>
-        <li id="search"><a href="/search">Search</a></li>
+        <li id="home" class="{{#if home}}{{style}}{{/if}}"><a href="/">Home</a></li>
+        <li id="latest" class="{{#if latest}}{{style}}{{/if}}"><a href="/latest">Latest articles</a></li>
+        <li id="search" class="{{#if search}}{{style}}{{/if}}"><a href="/search">Search</a></li>
         <li class="spacer"></li>
         {{#if currentUser}}
             <li id="post-article"><a href="/article/create">Post Article</a></li>
@@ -23,8 +24,8 @@
                 <a href="javascript:document.getElementById('logout-form').submit()">Logout</a>
             </li>
         {{else}}
-            <li id="register"><a href="/users/register">Register</a></li>
-            <li id="login"><a href="/users/login">Login</a></li>
+            <li id="register" class="{{#if register}}{{style}}{{/if}}"><a href="/users/register">Register</a></li>
+            <li id="login" class="{{#if login}}{{style}}{{/if}}"><a href="/users/login">Login</a></li>
         {{/if}}
     </ul>
 
