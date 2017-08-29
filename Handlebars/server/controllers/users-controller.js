@@ -60,7 +60,7 @@ module.exports = {
       hashedPass: hashedPassword
     }
 
-    //  Optional fields
+    //  Optional fields!
     let company = req.body.company || null
 
     if (company) {
