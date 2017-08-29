@@ -1,3 +1,4 @@
+const normalize = require('normalize-path')
 const mongoose = require('mongoose')
 const User = mongoose.model('User')
 
@@ -9,31 +10,29 @@ module.exports = {
     res.render('users/register', {register: true, style: 'selected'})
   },
   registerPost: (req, res) => {
-    console.log(req.body)
-
     //  Required fields
     // TODO common function to init fields
-    let firstName = req.body.firstName || null
+    let firstName = req.body.firstName.trim() || null
     if (!firstName) {
       errorHandler.handleValidationError(req, res, 'First name is required', 'users/register')
       return
     }
 
-    let lastName = req.body.lastName || null
+    let lastName = req.body.lastName.trim() || null
     if (!lastName) {
       errorHandler.handleValidationError(req, res, 'Last name is required', 'users/register')
       return
     }
 
-    let location = req.body.location || null
+    let location = req.body.location.trim() || null
     if (!location) {
       errorHandler.handleValidationError(req, res, 'Location is required', 'users/register')
       return
     }
 
     let password = req.body.password || null
-    if (!password) {
-      errorHandler.handleValidationError(req, res, 'Password is required', 'users/register')
+    if (!password || password.length < 4) {
+      errorHandler.handleValidationError(req, res, 'Password is required or too short', 'users/register')
       return
     }
 
@@ -43,44 +42,48 @@ module.exports = {
       return
     }
 
+    let salt = null
     let hashedPassword = null
     if (password === confirmPassword) {
-      let salt = encryption.generateSalt()
+      salt = encryption.generateSalt()
       hashedPassword = encryption.generateHashedPassword(salt, req.body.password)
     } else {
       errorHandler.handleValidationError(req, res, 'Passwords don`t match', 'users/register')
       return
     }
 
-    //  Optional fields
-    let company = req.body.company || null
-    let avatar = req.body.avatar || null
-
     let userObj = {
       firstName: firstName,
       lastName: lastName,
       location: location,
-      hashedPass: hashedPassword,
-      company: company,
-      avatar: avatar
+      salt: salt,
+      hashedPass: hashedPassword
     }
 
-    // UserActions
-    //   .create(req)
-    //   .then((user) => {
-    //     req.login(user, (err, user) => {
-    //       if (err) {
-    //         let message = errorHandler.handleMongooseError(err)
-    //         console.log(message)
-    //       }
-    //
-    //       res.redirect('/')
-    //     })
-    //   })
-    //   .catch((err) => {
-    //     let message = errorHandler.handleMongooseError(err)
-    //     console.log(message)
-    //   })
+    //  Optional fields
+    let company = req.body.company || null
+
+    if (company) {
+      userObj.company = company
+    }
+
+    if (req.file) {
+      req.file.path = normalize(req.file.path)
+      let startIndex = req.file.path.indexOf('/')
+      let avatarPath = req.file.path.slice(startIndex, req.file.path.length)
+      userObj.avatar = avatarPath
+    }
+
+    User.create(userObj)
+      .then(user => {
+        // TODO Login the user
+        res.redirect(`/users/profile/${user._id}`)
+      })
+      .catch(err => {
+        let message = errorHandler.handleMongooseError(err)
+        errorHandler.handleValidationError(req, res, message, 'users/register')
+        return
+      })
   },
   loginGet: (req, res) => {
     res.render('users/login', {login: true, style: 'selected'})
@@ -121,7 +124,10 @@ module.exports = {
     let message = 'Logout Success'
     console.log(message)
   },
-  profileGet: (req, res) => {},
+  profileGet: (req, res) => {
+    console.log('profile get controller')
+    res.render('users/profile', {profile: true, style: 'selected'})
+  },
   votesGet: (req, res) => {},
   votePost: (req, res) => {},
   messagesGet: (req, res) => {},

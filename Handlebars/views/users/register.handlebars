@@ -1,5 +1,5 @@
 <article class="register-form clearfix overflow" style="width: 1260px; margin: 0 auto">
-    <form action="/users/register" method="POST" class="flex">
+    <form action="/users/register" method="POST" enctype="multipart/form-data" class="flex">
         <fieldset>
             <p>Required fields</p>
 
@@ -40,7 +40,7 @@
 
             <div class="input-wrapper">
                 <label for="avatar">Avatar:</label>
-                <input type="file" name="avatar" id="avatar" value="{{avatar}}" />
+                <input type="file" accept="image/*" name="avatar" id="avatar" />
             </div>
         </fieldset>
 

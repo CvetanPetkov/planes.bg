@@ -19,6 +19,7 @@
         {{#if currentUser}}
             <li id="post-article"><a href="/article/create">Post Article</a></li>
             <li class='avatar-holder'>Welcome {{currentUser.company ? currentUser.company : currentUser.firstName}} <img src='{{currentUser.avatar}}' class='avatar-user-menu' /></li>
+            <li id="profile" class="{{#if profile}}{{style}}{{/if}}"><a href="/users/profile/{{currentUser._id}}">My profile</a></li>
             <li id="logout">
                 <form id="logout-form" action="/users/logout" method="POST"></form>
                 <a href="javascript:document.getElementById('logout-form').submit()">Logout</a>

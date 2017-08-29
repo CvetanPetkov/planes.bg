@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
+
 const types = mongoose.Schema.Types
 const encryption = require('../utilities/encryption')
 
@@ -14,7 +16,8 @@ let userSchema = new mongoose.Schema({
     required: REQUIRED_VALIDATION_MESSAGE
   },
   company: {
-    type: types.String
+    type: types.String,
+    unique: true
   },
   location: {
     type: types.String,
@@ -65,15 +68,13 @@ let userSchema = new mongoose.Schema({
   roles: [types.String]
 }, {timestamps: true})
 
+userSchema.plugin(uniqueValidator)
+
 userSchema.method({
   authenticate: function (password) {
     return encryption.generateHashedPassword(this.salt, password) === this.hashedPass
   }
 })
-
-// userSchema.statics.create = function (userObj) {
-//   return this.create(userObj)
-// }
 
 userSchema.query.getUser = function (user) {
   return this.findOne(user)

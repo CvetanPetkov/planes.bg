@@ -1,8 +1,25 @@
 const controllers = require('../controllers')
 const auth = require('./auth')
 const multer = require('multer')
+const fs = require('fs')
 
-let upload = multer({dest: './public/avatars'})
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      let newDir = `./public/avatars/${req.body.firstName}_${req.body.lastName}_${Date.now()}`
+      fs.mkdir(newDir, (err) => {
+        if (err) {
+          console.log(err)
+        }
+      })
+
+      cb(null, newDir)
+    } else {
+      return console.log('opaa')
+    }
+  }
+})
+let upload = multer({storage: storage})
 
 module.exports = (app) => {
   app.get('/', controllers.home.indexGet)

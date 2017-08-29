@@ -131,3 +131,13 @@ input[type="submit"]:hover {
 input[type="file"]{
     border: none;
 }
+
+.global-error {
+    display: inline-block;
+    color: white;
+    padding: 5px 10px;
+    background: #ff0000;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
