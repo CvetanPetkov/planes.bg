@@ -16,6 +16,26 @@ h1 {
     padding: 30px;
 }
 
+.user-absolute-block {
+    display: inline-block;
+    padding: 5px 5px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-style: italic;
+    font-size: 0.7rem;
+    max-width: 400px;
+}
+
+.user-absolute-block div:nth-child(2) {
+    text-align: center
+}
+
+.avatar-user-block {
+    max-width: 150px;
+    max-height: 70px;
+}
+
 .menu {
     justify-content: center;
     margin-bottom: 20px;
@@ -61,13 +81,6 @@ h1 {
 
 .avatar-holder {
     position: relative;
-}
-
-.avatar-user-menu {
-    width: 50px;
-    position: absolute;
-    top: -15px;
-    right: -50px;
 }
 
 .login-form {

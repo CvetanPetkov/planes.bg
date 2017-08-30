@@ -14,31 +14,31 @@ module.exports = {
     // TODO common function to init fields
     let firstName = req.body.firstName.trim() || null
     if (!firstName) {
-      errorHandler.handleValidationError(req, res, 'First name is required', 'users/register')
+      errorHandler.handleCommonError(req, res, 'First name is required', 'users/register')
       return
     }
 
     let lastName = req.body.lastName.trim() || null
     if (!lastName) {
-      errorHandler.handleValidationError(req, res, 'Last name is required', 'users/register')
+      errorHandler.handleCommonError(req, res, 'Last name is required', 'users/register')
       return
     }
 
     let location = req.body.location.trim() || null
     if (!location) {
-      errorHandler.handleValidationError(req, res, 'Location is required', 'users/register')
+      errorHandler.handleCommonError(req, res, 'Location is required', 'users/register')
       return
     }
 
     let password = req.body.password || null
     if (!password || password.length < 4) {
-      errorHandler.handleValidationError(req, res, 'Password is required or too short', 'users/register')
+      errorHandler.handleCommonError(req, res, 'Password is required or too short', 'users/register')
       return
     }
 
     let confirmPassword = req.body.confirmPassword || null
     if (!confirmPassword) {
-      errorHandler.handleValidationError(req, res, 'Confirm password is required', 'users/register')
+      errorHandler.handleCommonError(req, res, 'Confirm password is required', 'users/register')
       return
     }
 
@@ -48,7 +48,7 @@ module.exports = {
       salt = encryption.generateSalt()
       hashedPassword = encryption.generateHashedPassword(salt, req.body.password)
     } else {
-      errorHandler.handleValidationError(req, res, 'Passwords don`t match', 'users/register')
+      errorHandler.handleCommonError(req, res, 'Passwords don`t match', 'users/register')
       return
     }
 
@@ -76,35 +76,32 @@ module.exports = {
 
     User.create(userObj)
       .then(user => {
-        // TODO Login the user
-        res.redirect(`/users/profile/${user._id}`)
+        req.logIn(user, (err, user) => {
+          if (err) {
+            res.locals.globalError = err
+            console.log(err)
+            res.render('users/register', userObj)
+          }
+          console.log('Login Success')
+          res.redirect('/')
+        })
       })
       .catch(err => {
         let message = errorHandler.handleMongooseError(err)
-        errorHandler.handleValidationError(req, res, message, 'users/register')
-        return
+        errorHandler.handleCommonError(req, res, message, 'users/register')
       })
   },
   loginGet: (req, res) => {
     res.render('users/login', {login: true, style: 'selected'})
   },
   loginPost: (req, res) => {
-    console.log('loginPost')
-    console.log(req.body)
-
     let reqUser = req.body
+    console.log(reqUser)
 
     User.findOne({company: reqUser.company})
       .then((user) => {
-        if (!user) {
-          let message = 'Invalid user data'
-          console.log(message)
-          return
-        }
-
-        if (!user.authenticate(reqUser.password)) {
-          let message = 'Invalid user data'
-          console.log(message)
+        if (!user || !user.authenticate(reqUser.password)) {
+          errorHandler.handleCommonError(req, res, 'Invalid user data', 'users/login')
           return
         }
 
@@ -114,15 +111,16 @@ module.exports = {
             console.log(message)
           }
 
-          let message = 'Login Success'
-          console.log(message)
+          console.log('Login Success')
+          res.redirect('/')
         })
       })
   },
   logout: (req, res) => {
     req.logout()
-    let message = 'Logout Success'
-    console.log(message)
+    console.log('Logout Success')
+
+    res.redirect('/')
   },
   profileGet: (req, res) => {
     console.log('profile get controller')

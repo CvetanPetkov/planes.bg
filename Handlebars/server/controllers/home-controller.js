@@ -7,8 +7,7 @@ module.exports = {
   indexGet: (req, res) => {
     let user = req.user
     if (user) {
-      let userId = req.user._id
-      console.log(userId)
+      res.render('home/index', {home: true, style: 'selected'})
     } else {
       res.render('home/index', {home: true, style: 'selected'})
     }

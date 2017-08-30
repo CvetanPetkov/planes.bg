@@ -5,7 +5,7 @@ module.exports = {
 
     return message
   },
-  handleValidationError: (req, res, errMsg, url) => {
+  handleCommonError: (req, res, errMsg, url) => {
     res.locals.globalError = errMsg
     return res.render(url, req.body)
   }
