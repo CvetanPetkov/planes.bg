@@ -13,6 +13,10 @@ module.exports = () => {
 
   passport.serializeUser((user, done) => {
     if (user) return done(null, user._id)
+    if (!user) {
+      let err = 'Something went wrong. Please reload the page, and try again!'
+      return done(err)
+    }
   })
 
   passport.deserializeUser((id, done) => {

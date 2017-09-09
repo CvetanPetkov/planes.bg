@@ -6,27 +6,30 @@
 
             <div class="input-wrapper">
                 <label for="firstName">First name:</label>
-                <input type="text" name="firstName" id="firstName" placeholder="First name" value="{{firstName}}" />
+                <input type="text" name="firstName" id="firstName" placeholder="First name" value="{{firstName}}"/>
             </div>
 
             <div class="input-wrapper">
                 <label for="lastName">Last name:</label>
-                <input type="text" name="lastName" id="lastName" placeholder="Last name" value="{{lastName}}" />
+                <input type="text" name="lastName" id="lastName" placeholder="Last name" value="{{lastName}}"/>
             </div>
 
             <div class="input-wrapper">
-                <label for="location">Location:</label>
-                <input type="text" name="location" id="location" placeholder="Location/Address" value="{{location}}" />
+                <label for="company">Company:</label>
+                <input type="text" name="company" id="company" placeholder="Company" value="{{company}}"
+                       onkeyup="checkCompanyExists(this)"/>
+                <div id="mustBeUnique" class="company-error">*Company must be unique</div>
             </div>
 
             <div class="input-wrapper">
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="password" placeholder="Password" value="{{password}}" />
+                <input type="password" name="password" id="password" placeholder="Password" value="{{password}}"/>
             </div>
 
             <div class="input-wrapper">
                 <label for="confirmPassword">Confirm password:</label>
-                <input type="password" name="confirmPassword" id="ConfirmPassword" placeholder="Confirm password" value="{{confirmPassword}}" />
+                <input type="password" name="confirmPassword" id="ConfirmPassword" placeholder="Confirm password"
+                       value="{{confirmPassword}}"/>
             </div>
         </fieldset>
 
@@ -34,16 +37,41 @@
             <p>Optional fields</p>
 
             <div class="input-wrapper">
-                <label for="company">Company:</label>
-                <input type="text" name="company" id="company" placeholder="Company" value="{{company}}" />
+                <label for="location">Location:</label>
+                <input type="text" name="location" id="location" placeholder="Location/Address" value="{{location}}"/>
             </div>
 
             <div class="input-wrapper">
                 <label for="avatar">Avatar:</label>
-                <input type="file" accept="image/*" name="avatar" id="avatar" />
+                <input type="file" accept="image/*" name="avatar" id="avatar"/>
             </div>
         </fieldset>
 
-        <input type="submit" value="Register" />
+        <input type="submit" value="Register"/>
     </form>
 </article>
+
+<script>
+    let httpRequest
+
+    function checkCompanyExists (e) {
+        httpRequest = new XMLHttpRequest()
+        httpRequest.onreadystatechange = handleData
+        httpRequest.open('POST', '/users/register/checkCompany')
+        httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        httpRequest.send(e.name + '=' + encodeURIComponent(e.value))
+    }
+
+    function handleData () {
+        switch (httpRequest.status) {
+            case 200:
+                document.getElementById('mustBeUnique').style.display = 'none'
+                break
+            case 226:
+                document.getElementById('mustBeUnique').style.display = 'block'
+                break
+            default:
+                break
+        }
+    }
+</script>

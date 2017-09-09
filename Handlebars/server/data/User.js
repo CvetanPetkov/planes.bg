@@ -17,11 +17,11 @@ let userSchema = new mongoose.Schema({
   },
   company: {
     type: types.String,
+    required: REQUIRED_VALIDATION_MESSAGE,
     unique: true
   },
   location: {
-    type: types.String,
-    required: REQUIRED_VALIDATION_MESSAGE
+    type: types.String
   },
   avatar: {
     type: types.String,
@@ -117,7 +117,7 @@ module.exports.seedAdminUser = () => {
     if (users.length > 0) return
 
     let salt = encryption.generateSalt()
-    let hashedPass = encryption.generateHashedPassword(salt, '11')
+    let hashedPass = encryption.generateHashedPassword(salt, '1111')
 
     User.create({
       firstName: 'Admin',

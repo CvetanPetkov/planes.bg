@@ -26,10 +26,12 @@ module.exports = (app) => {
   app.get('/latest', controllers.home.latestGet)
   app.get('/search', controllers.home.searchGet)
   app.post('/search', controllers.home.searchPost)
-  app.get('/article/create', controllers.home.articleCreate)
+  app.get('/article/create', auth.isAuthenticated, controllers.home.createGet)
+  app.post('/article/create', auth.isAuthenticated, controllers.home.createPost)
 
   app.get('/users/register', controllers.users.registerGet)
   app.post('/users/register', upload.single('avatar'), controllers.users.registerPost)
+  app.post('/users/register/checkCompany', controllers.users.checkCompany)
   app.get('/users/login', controllers.users.loginGet)
   app.post('/users/login', controllers.users.loginPost)
   app.post('/users/logout', controllers.users.logout)
@@ -45,6 +47,7 @@ module.exports = (app) => {
 
   app.get('/article/plane/all', controllers.plane.allGet)
   app.get('/article/plane/:plane', auth.isAuthenticated, controllers.plane.singleGet)
+  app.get('/article/plane/create', auth.isAuthenticated, controllers.plane.createGet)
   app.post('/article/plane/create', auth.isAuthenticated, upload.array('image', 12), controllers.plane.createPost)
   app.get('/article/plane/:plane/accessories', auth.isAuthenticated, controllers.plane.accessoriesAllGet)
   app.post('/article/plane/:plane/accessories', auth.isAuthenticated, controllers.plane.accessoryPost)

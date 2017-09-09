@@ -5,8 +5,13 @@ module.exports = {
 
     return message
   },
-  handleCommonError: (req, res, errMsg, url) => {
+  handleCommonError: (req, res, errMsg, url, selector) => {
     res.locals.globalError = errMsg
+    if (selector) {
+      req.body[selector] = true
+      req.body['style'] = 'selected'
+    }
+
     return res.render(url, req.body)
   }
 }

@@ -21,5 +21,8 @@ module.exports = {
   searchPost: (req, res) => {
 
   },
-  articleCreate: (req, res) => {}
+  createGet: (req, res) => {
+    res.render('home/create', {create: true, style: 'selected'})
+  },
+  createPost: (req, res) => {}
 }

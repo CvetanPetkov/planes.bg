@@ -11,34 +11,33 @@ module.exports = {
   },
   registerPost: (req, res) => {
     //  Required fields
-    // TODO common function to init fields
     let firstName = req.body.firstName.trim() || null
     if (!firstName) {
-      errorHandler.handleCommonError(req, res, 'First name is required', 'users/register')
+      errorHandler.handleCommonError(req, res, 'First name is required', 'users/register', 'register')
       return
     }
 
     let lastName = req.body.lastName.trim() || null
     if (!lastName) {
-      errorHandler.handleCommonError(req, res, 'Last name is required', 'users/register')
+      errorHandler.handleCommonError(req, res, 'Last name is required', 'users/register', 'register')
       return
     }
 
-    let location = req.body.location.trim() || null
-    if (!location) {
-      errorHandler.handleCommonError(req, res, 'Location is required', 'users/register')
+    let company = req.body.company.trim() || null
+    if (!company) {
+      errorHandler.handleCommonError(req, res, 'Company is required', 'users/register', 'register')
       return
     }
 
     let password = req.body.password || null
     if (!password || password.length < 4) {
-      errorHandler.handleCommonError(req, res, 'Password is required or too short', 'users/register')
+      errorHandler.handleCommonError(req, res, 'Password is required or too short', 'users/register', 'register')
       return
     }
 
     let confirmPassword = req.body.confirmPassword || null
     if (!confirmPassword) {
-      errorHandler.handleCommonError(req, res, 'Confirm password is required', 'users/register')
+      errorHandler.handleCommonError(req, res, 'Confirm password is required', 'users/register', 'register')
       return
     }
 
@@ -48,23 +47,22 @@ module.exports = {
       salt = encryption.generateSalt()
       hashedPassword = encryption.generateHashedPassword(salt, req.body.password)
     } else {
-      errorHandler.handleCommonError(req, res, 'Passwords don`t match', 'users/register')
+      errorHandler.handleCommonError(req, res, 'Passwords don`t match', 'users/register', 'register')
       return
     }
 
     let userObj = {
       firstName: firstName,
       lastName: lastName,
-      location: location,
+      company: company,
       salt: salt,
       hashedPass: hashedPassword
     }
 
     //  Optional fields!
-    let company = req.body.company || null
-
-    if (company) {
-      userObj.company = company
+    let location = req.body.location.trim() || null
+    if (location) {
+      userObj.location = location
     }
 
     if (req.file) {
@@ -78,9 +76,7 @@ module.exports = {
       .then(user => {
         req.logIn(user, (err, user) => {
           if (err) {
-            res.locals.globalError = err
-            console.log(err)
-            res.render('users/register', userObj)
+            errorHandler.handleCommonError(req, res, err, 'users/register', 'register')
           }
           console.log('Login Success')
           res.redirect('/')
@@ -88,27 +84,67 @@ module.exports = {
       })
       .catch(err => {
         let message = errorHandler.handleMongooseError(err)
-        errorHandler.handleCommonError(req, res, message, 'users/register')
+        errorHandler.handleCommonError(req, res, message, 'users/register', 'register')
+      })
+  },
+  checkCompany: (req, res) => {
+    let company = req.body.company
+
+    User.findOne({company: company})
+      .then(user => {
+        if (!user) {
+          res.sendStatus(200)
+          res.end()
+        } else {
+          res.sendStatus(226)
+        }
       })
   },
   loginGet: (req, res) => {
     res.render('users/login', {login: true, style: 'selected'})
   },
   loginPost: (req, res) => {
-    let reqUser = req.body
-    console.log(reqUser)
+    let firstName = req.body.firstName || null
+    if (!firstName) {
+      errorHandler.handleCommonError(req, res, 'First name is required', 'users/login', 'login')
+      return
+    }
 
-    User.findOne({company: reqUser.company})
+    let lastName = req.body.lastName.trim() || null
+    if (!lastName) {
+      errorHandler.handleCommonError(req, res, 'Last name is required', 'users/login', 'login')
+      return
+    }
+
+    let company = req.body.company.trim() || null
+    if (!company) {
+      errorHandler.handleCommonError(req, res, 'Company is required', 'users/login', 'login')
+      return
+    }
+
+    let password = req.body.password || null
+    if (!password || password.length < 4) {
+      errorHandler.handleCommonError(req, res, 'Password is required or too short', 'users/login', 'login')
+      return
+    }
+
+    let userObj = {
+      firstName: firstName,
+      lastName: lastName,
+      company: company,
+      password: password
+    }
+
+    User.findOne({firstName: userObj.firstName, lastName: userObj.lastName, company: userObj.company})
       .then((user) => {
-        if (!user || !user.authenticate(reqUser.password)) {
+        if (!user || !user.authenticate(userObj.password)) {
           errorHandler.handleCommonError(req, res, 'Invalid user data', 'users/login')
           return
         }
 
         req.logIn(user, (err, user) => {
           if (err) {
-            let message = err
-            console.log(message)
+            errorHandler.handleCommonError(req, res, err, 'users/login', 'login')
           }
 
           console.log('Login Success')
@@ -123,7 +159,6 @@ module.exports = {
     res.redirect('/')
   },
   profileGet: (req, res) => {
-    console.log('profile get controller')
     res.render('users/profile', {profile: true, style: 'selected'})
   },
   votesGet: (req, res) => {},
@@ -132,44 +167,4 @@ module.exports = {
   messagePost: (req, res) => {},
   purchHistoryGet: (req, res) => {},
   deleteUser: (req, res) => {}
-  // getUserVotes: (req, res) => {
-  //   UserActions
-  //     .getUserVotes(req)
-  //     .then((votes) => {
-  //       console.log(votes)
-  //     })
-  //     .catch((err) => {
-  //       let message = errorHandler.handleMongooseError(err)
-  //       console.log(message)
-  //     })
-  // },
-  // pushVote: (user, vote) => {
-  //   UserActions
-  //     .pushVote(user, vote)
-  //     .then((response) => { console.log(response) })
-  //     .catch((err) => {
-  //       let message = errorHandler.handleMongooseError(err)
-  //       console.log(message)
-  //     })
-  // },  // TODO move to vote-controller
-  // getUserComments: (req, res) => {
-  //   UserActions
-  //     .getUserComments(req)
-  //     .then((comments) => {
-  //       console.log(comments)
-  //     })
-  //     .catch((err) => {
-  //       let message = errorHandler.handleMongooseError(err)
-  //       console.log(message)
-  //     })
-  // },
-  // pushComment: (user, comment) => {
-  //   UserActions
-  //     .pushComment(user, comment)
-  //     .then((response) => { console.log(response) })
-  //     .catch((err) => {
-  //       let message = errorHandler.handleMongooseError(err)
-  //       console.log(message)
-  //     })
-  // }  //  TODO move to comment-controller
 }

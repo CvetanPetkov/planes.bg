@@ -15,9 +15,9 @@
         <li id="home" class="{{#if home}}{{style}}{{/if}}"><a href="/">Home</a></li>
         <li id="latest" class="{{#if latest}}{{style}}{{/if}}"><a href="/latest">Latest articles</a></li>
         <li id="search" class="{{#if search}}{{style}}{{/if}}"><a href="/search">Search</a></li>
-        <li class="spacer"></li>
+        <li class="spacer"><img src="/icons/military_16-128_home.png" /> </li>
         {{#if currentUser}}
-            <li id="post-article"><a href="/article/create">Post Article</a></li>
+            <li id="post-article" class="{{#if create}}{{style}}{{/if}}"><a href="/article/create">Post Article</a></li>
             <li id="profile" class="{{#if profile}}{{style}}{{/if}}"><a href="/users/profile/{{currentUser._id}}">My
                 profile</a></li>
             <li id="logout">
