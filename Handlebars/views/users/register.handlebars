@@ -1,4 +1,4 @@
-<article class="register-form clearfix overflow" style="width: 1260px; margin: 0 auto">
+<article class="register-form clearfix overflow">
     <form action="/users/register" method="POST" enctype="multipart/form-data" class="flex">
         <fieldset>
             <p>Required fields</p>
@@ -47,19 +47,21 @@
             </div>
         </fieldset>
 
-        <input type="submit" value="Register"/>
+        <fieldset>
+            <input type="submit" value="Register"/>
+        </fieldset>
     </form>
 </article>
 
 <script>
     let httpRequest
 
-    function checkCompanyExists (e) {
+    function checkCompanyExists (el) {
         httpRequest = new XMLHttpRequest()
         httpRequest.onreadystatechange = handleData
         httpRequest.open('POST', '/users/register/checkCompany')
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-        httpRequest.send(e.name + '=' + encodeURIComponent(e.value))
+        httpRequest.send(el.name + '=' + encodeURIComponent(el.value))
     }
 
     function handleData () {

@@ -1,19 +1,32 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 html, body {
-    min-height: 100%;
+    height: 100%;
 }
 
 body {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     background: #eaf0f1;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-h1 {
-    text-align: center;
-    background-color: #fff;
-    padding: 30px;
+.container {
+    flex: 1 0 auto;
+}
+
+.container-header {
+    background: url('/images/header-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto;
+    padding: 40px;
+    max-width: 100%;
 }
 
 .user-absolute-block {
@@ -23,6 +36,7 @@ h1 {
     top: 20px;
     right: 20px;
     font-style: italic;
+    color: #ffffff;
     font-size: 0.7rem;
     max-width: 400px;
 }
@@ -38,8 +52,8 @@ h1 {
 
 .menu {
     justify-content: center;
+    flex-wrap: wrap;
     margin-bottom: 20px;
-    background: #fff;
 }
 
 .menu li:not(:first-child) {
@@ -47,7 +61,7 @@ h1 {
 }
 
 .menu li:not(.spacer) {
-    background: #696969;
+    background: rgba(105, 105, 105, 0.85);
     font-size: 1.1rem;
     color: #fff;
     padding: 7px 12px;
@@ -67,9 +81,11 @@ h1 {
 .menu .spacer {
     width: 120px;
     text-align: center;
+    background: #eaf0f1;
+    border-radius: 10px 10px 0 0;
 }
 
-.menu .spacer>img {
+.menu .spacer > img {
     width: 70%;
 }
 
@@ -93,19 +109,28 @@ h1 {
     margin-left: 60px;
 }
 
-.register-form .flex {
-    flex-wrap: wrap;
+form.flex {
+    flex-flow: row wrap;
     justify-content: space-between;
 }
 
-fieldset {
+form.flex fieldset:not(:last-child) {
     margin-left: 5%;
-    width: 45%;
+    flex: 0 0 45%;
+    min-width: 350px;
     border: 0;
 }
 
+form.flex fieldset:nth-child(3) {
+    flex: 1 0 100%;
+    border: 0;
+    text-align: right;
+    padding-right: calc(45% - 310px);
+}
+
 .login-form p,
-.register-form p {
+.register-form p,
+.create-form p {
     color: #f1457e;
 }
 
@@ -113,17 +138,53 @@ fieldset {
     margin: 20px 0;
 }
 
-label {
-    display: inline-block;
-    width: 100px;
+.input-wrapper.plane-add-accessory button {
+    background: none;
+    border: solid 2px #7988f1;
+    border-radius: 7px;
+    padding: 5px 7px 3px 7px;
+    margin-left: 20px;
+    cursor: pointer;
+    outline: none;
 }
 
-.input-wrapper input {
+.input-wrapper.plane-add-accessory button:hover {
+    background: #7988f1;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.input-wrapper label {
+    display: inline-block;
+    width: 110px;
+}
+
+.input-wrapper input,
+.input-wrapper select {
     width: 200px;
     padding: 5px;
     border: solid 1px #696969;
     border-radius: 0 7px 7px 0;
     outline: none;
+}
+
+.input-wrapper textarea {
+    padding: 5px;
+    border: solid 1px #696969;
+    border-radius: 0 7px 7px 0;
+    outline: none;
+    width: 315px;
+    height: 200px;
+}
+
+form.create-form .checkbox-wrapper label {
+    min-width: 50px;
+}
+
+form.create-form .checkbox-wrapper input[type="checkbox"] {
+    width: auto;
+    margin-left: 10px;
+    margin-right: 50px;
 }
 
 input[type="submit"] {
@@ -141,12 +202,7 @@ input[type="submit"]:hover {
     background: #9da2f1;
 }
 
-.register-form input[type="submit"] {
-    margin-left: auto;
-    margin-right: calc(45% - 305px);
-}
-
-input[type="file"]{
+input[type="file"] {
     border: none;
 }
 
@@ -165,4 +221,54 @@ input[type="file"]{
     margin-left: 100px;
     font-size: small;
     color: red;
+}
+
+.create-content {
+    flex-flow: row wrap;
+}
+
+.create-content aside {
+    flex: 0 0 25%;
+    padding-left: 40px;
+    border-right: solid 4px #ffffff;
+}
+
+.create-content main {
+    flex: 1 75%;
+}
+
+.btn-div {
+    margin-top: 20px;
+    padding: 1px 0;
+}
+
+.btn-div span {
+    font-size: 1.2rem;
+    padding: 5px 40px 0 0;
+    cursor: pointer;
+}
+
+.btn-div span:hover {
+    border-bottom: solid 4px #ffffff;
+    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.6);
+}
+
+
+
+footer {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    background: #696969;
+    padding: 10px;
+    flex: 0 0 auto;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+footer span {
+    color: #ffffff;
+}
+
+footer .padded {
+    margin-left: 15px;
 }

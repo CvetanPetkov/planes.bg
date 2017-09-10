@@ -25,7 +25,7 @@ let planeSchema = new mongoose.Schema({
     ref: 'Category'
   }],
   condition: [{
-    type: types.String,  //  ['New', 'Used', 'Scrap']
+    type: types.String,
     required: REQUIRED_VALIDATION_MESSAGE
   }],
   airHours: {
@@ -36,7 +36,8 @@ let planeSchema = new mongoose.Schema({
   hoursToMaintenance: {
     type: Number,
     default: 0,
-    min: 0
+    min: 0,
+    max: 10000
   },
   price: {
     type: Number,
@@ -45,14 +46,15 @@ let planeSchema = new mongoose.Schema({
   },
   inStock: {
     type: Number,
-    min: 0
+    min: 0,
+    max: 100
   },
   crew: {
     type: Number,
     min: 0
   },
   engine: {
-    type: types.String, //  'No' : 'Shaft' : 'Turbine' : 'Reaction' : 'Rocket'
+    type: types.String,
     default: 'No'
   },
   radar: {
@@ -66,12 +68,14 @@ let planeSchema = new mongoose.Schema({
   enginesCount: {
     type: Number,
     default: 0,
-    min: 0
+    min: 0,
+    max: 100
   },
   passengersCount: {
     type: Number,
     default: 0,
-    min: 0
+    min: 0,
+    max: 1000
   },
   accessories: [{
     type: types.ObjectId,

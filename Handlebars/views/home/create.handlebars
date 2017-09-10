@@ -1,88 +1,163 @@
-<div class="main-area">
+<div class="create-content flex">
     <aside>
-        <button name="plane" value="plane" onclick="switchDisplay(this.value)">Plane</button>
-        <button name="accessory" value="accessory" onclick="switchDisplay(this.value)">Accessory</button>
+        <p><i>choose what to sell:</i></p>
+        <div class="btn-div" data-value="plane" onclick="switchDisplay(this)"><span>Plane</span></div>
+        <div class="btn-div" data-value="accessory" onclick="switchDisplay(this)"><span>Accessory</span></div>
     </aside>
 
-    <main id="guz" style="display: none">
-        <form action="/users/register" method="POST" enctype="multipart/form-data" class="flex">
-            <fieldset>
-                <p>Required fields</p>
-
-
-                <div class="input-wrapper">
-                    <label for="firstName">First name:</label>
-                    <input type="text" name="firstName" id="firstName" placeholder="First name" value="{{firstName}}" />
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="lastName">Last name:</label>
-                    <input type="text" name="lastName" id="lastName" placeholder="Last name" value="{{lastName}}" />
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="company">Company:</label>
-                    <input type="text" name="company" id="company" placeholder="Company" value="{{company}}" />
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" id="password" placeholder="Password" value="{{password}}" />
-                </div>
-
-                <div class="input-wrapper">
-                    <label for="confirmPassword">Confirm password:</label>
-                    <input type="password" name="confirmPassword" id="ConfirmPassword" placeholder="Confirm password" value="{{confirmPassword}}" />
-                </div>
-            </fieldset>
-
+    <main id="plane" style="display: none">
+        <form action="/users/register" method="POST" enctype="multipart/form-data" class="create-form flex">
             <fieldset>
                 <p>Required fields</p>
 
                 <div class="input-wrapper">
-                    <label for="location">Location:</label>
-                    <input type="text" name="location" id="location" placeholder="Location/Address" value="{{location}}" />
+                    <label for="manufacturer">Manufacturer:</label>
+                    <input type="text" name="manufacturer" id="manufacturer" placeholder="Manufacturer"
+                           value="{{manufacturer}}"/>
                 </div>
 
                 <div class="input-wrapper">
-                    <label for="avatar">Avatar:</label>
-                    <input type="file" accept="image/*" name="avatar" id="avatar" />
+                    <label for="model">Model name:</label>
+                    <input type="text" name="model" id="model" placeholder="Model name" value="{{model}}"/>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="description" style="display: block">Description:</label>
+                    <textarea maxlength="1000" name="description" id="description" placeholder="Description"
+                              value="{{description}}"></textarea>
+                </div>
+
+                <div class="input-wrapper">
+                    <label>Condition:</label>
+                    <select>
+                        <option value="null" selected>Select condition</option>
+                        {{#each conditions}}
+                            <option value="{{@index}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="airHours">Air hours:</label>
+                    <input type="number" name="airHours" id="airHours" placeholder="Air hours" value="{{airHours}}"/>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="price">Price -> EUR:</label>
+                    <input type="number" name="price" id="price" placeholder="Price in EUR" value="{{price}}"/>
+                </div>
+
+                <div class="input-wrapper">
+                    <label>Images count:</label>
+                    <select onchange="selectedCount(this)">
+                        <option value="null" selected>Select number</option>
+                        {{#each imagesCount}}
+                            <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div id="imagesUpload" class="input-wrapper"></div>
+            </fieldset>
+
+            <fieldset>
+                <p>Optional fields</p>
+
+                <div class="input-wrapper">
+                    <label>Category:</label>
+                    <select>
+                        <option value="null" selected>Select category</option>
+                        {{#each categories}}
+                            <option value="{{@index}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="input-wrapper">
+                    <label>Engine:</label>
+                    <select>
+                        <option value="null" selected>Select engine type</option>
+                        {{#each engines}}
+                            <option value="{{@index}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="hoursToMaintenance">Hours to maintenance:</label>
+                    <input type="number" min="0" max="10000" name="hoursToMaintenance" id="hoursToMaintenance" placeholder="Hours to maintenance" value="{{hoursToMaintenance}}" />
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="inStock">Available quantity:</label>
+                    <input type="number" min="0" max="1000" name="inStock" id="inStock" placeholder="Available quantity" value="{{inStock}}" />
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="crew">Crew quantity:</label>
+                    <input type="number" min="0" max="100" name="crew" id="crew" placeholder="Crew quantity" value="{{crew}}" />
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="enginesCount">Engines count:</label>
+                    <input type="number" min="0" max="100" name="enginesCount" id="enginesCount" placeholder="Engines count" value="{{enginesCount}}" />
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="passengersCount">Passengers count:</label>
+                    <input type="number" min="0" max="1000" name="passengersCount" id="passengersCount" placeholder="Passengers count" value="{{passengersCount}}" />
+                </div>
+
+                <div class="checkbox-wrapper">
+                    <label for="radar">Radar:</label>
+                    <input type="checkbox" name="radar" id="radar" />
+
+                    <label for="transponder">Transponder:</label>
+                    <input type="checkbox" name="transponder" id="transponder" />
+                </div>
+
+                <div class="input-wrapper plane-add-accessory">
+                    <span>Add accessory now?</span>
+                    <button type="button" onclick="showAccessoryForm()">YES</button>
                 </div>
             </fieldset>
 
-            <input type="submit" value="Register" />
+            <fieldset>
+                <input type="submit" value="Create"/>
+            </fieldset>
         </form>
     </main>
 
-    <main id="dupe" style="display: none">
-        <form action="/users/register" method="POST" enctype="multipart/form-data" class="flex">
+    <main id="accessory" style="display: none">
+        <form action="/users/register" method="POST" enctype="multipart/form-data" class="create-form flex">
             <fieldset>
                 <p>Optional fields</p>
 
 
                 <div class="input-wrapper">
                     <label for="firstName">First name:</label>
-                    <input type="text" name="firstName" id="firstName" placeholder="First name" value="{{firstName}}" />
+                    <input type="text" name="firstName" id="firstName" placeholder="First name" value="{{firstName}}"/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="lastName">Last name:</label>
-                    <input type="text" name="lastName" id="lastName" placeholder="Last name" value="{{lastName}}" />
+                    <input type="text" name="lastName" id="lastName" placeholder="Last name" value="{{lastName}}"/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="company">Company:</label>
-                    <input type="text" name="company" id="company" placeholder="Company" value="{{company}}" />
+                    <input type="text" name="company" id="company" placeholder="Company" value="{{company}}"/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="password">Password:</label>
-                    <input type="password" name="password" id="password" placeholder="Password" value="{{password}}" />
+                    <input type="password" name="password" id="password" placeholder="Password" value="{{password}}"/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="confirmPassword">Confirm password:</label>
-                    <input type="password" name="confirmPassword" id="ConfirmPassword" placeholder="Confirm password" value="{{confirmPassword}}" />
+                    <input type="password" name="confirmPassword" id="ConfirmPassword" placeholder="Confirm password"
+                           value="{{confirmPassword}}"/>
                 </div>
             </fieldset>
 
@@ -91,31 +166,57 @@
 
                 <div class="input-wrapper">
                     <label for="location">Location:</label>
-                    <input type="text" name="location" id="location" placeholder="Location/Address" value="{{location}}" />
+                    <input type="text" name="location" id="location" placeholder="Location/Address"
+                           value="{{location}}"/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="avatar">Avatar:</label>
-                    <input type="file" accept="image/*" name="avatar" id="avatar" />
+                    <input type="file" accept="image/*" name="avatar" id="avatar"/>
                 </div>
             </fieldset>
 
-            <input type="submit" value="Register" />
+            <fieldset>
+                <input type="submit" value="Register"/>
+            </fieldset>
         </form>
     </main>
 </div>
 
-<script>function switchDisplay (value) {
-    switch (value) {
-        case 'plane':
-            document.getElementById('dupe').style.display = 'none'
-            document.getElementById('guz').style.display = 'block'
-            break
-        case 'accessory':
-            document.getElementById('guz').style.display = 'none'
-            document.getElementById('dupe').style.display = 'block'
-            break
-        default:
-          console.log('An error has occurred. Please reload the page!')
+<script>
+    function switchDisplay (el) {
+        switch (el.getAttribute('data-value')) {
+            case 'plane':
+                document.getElementById('accessory').style.display = 'none'
+                document.getElementById('plane').style.display = 'block'
+                break
+            case 'accessory':
+                document.getElementById('plane').style.display = 'none'
+                document.getElementById('accessory').style.display = 'block'
+                break
+            default:
+                console.log('An error has occurred. Please reload the page!')
+        }
     }
-}</script>
+
+    function selectedCount (el) {
+        let imagesCount = el.value
+        let html = ``
+
+        for (let i = 1; i <= imagesCount; i++) {
+            html += `
+                <div class="input-wrapper">
+                    <label for="image${i}">Image${i}: </label>
+                    <input type="file" accept="image/*" name="image${i}" id="image${i}"/>
+                </div>`
+        }
+
+        let element = document.getElementById('imagesUpload')
+        element.innerHTML = ''
+        element.insertAdjacentHTML('afterbegin', html)
+    }
+
+    function showAccessoryForm () {
+        console.log('accessory form')
+    }
+</script>

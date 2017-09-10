@@ -6,7 +6,6 @@ const errorHandler = require('../utilities/error-handler')
 module.exports = {
   allGet: (req, res) => {},
   singleGet: (req, res) => {},
-  createGet: (req, res) => {},
   createPost: (req, res) => {},
   accessoriesAllGet: (req, res) => {},
   accessoryPost: (req, res) => {},

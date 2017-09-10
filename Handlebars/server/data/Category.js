@@ -5,7 +5,7 @@ const REQUIRED_VALIDATION_MESSAGE = '{PATH} is required!'
 
 let categorySchema = new mongoose.Schema({
   name: {
-    type: types.String,  //  ['Glider', 'Civil', 'Military', 'Passenger', 'Transport', 'Other']
+    type: types.String,
     required: REQUIRED_VALIDATION_MESSAGE
   },
   planes: [{

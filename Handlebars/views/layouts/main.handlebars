@@ -7,40 +7,57 @@
     <link rel="shortcut icon" type="image/png" href="/icons/military_16-128.png"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
+<body class="flex">
 <div class="container">
-    <h1>Planes.bg - all planes in one place</h1>
+    <div class="container-header">
+        <img class="logo" src="/images/logo.png" />
 
-    <ul class="menu flex">
-        <li id="home" class="{{#if home}}{{style}}{{/if}}"><a href="/">Home</a></li>
-        <li id="latest" class="{{#if latest}}{{style}}{{/if}}"><a href="/latest">Latest articles</a></li>
-        <li id="search" class="{{#if search}}{{style}}{{/if}}"><a href="/search">Search</a></li>
-        <li class="spacer"><img src="/icons/military_16-128_home.png" /> </li>
+        <ul class="menu flex">
+            <li id="home" class="{{#if home}}{{style}}{{/if}}"><a href="/">Home</a></li>
+            <li id="latest" class="{{#if latest}}{{style}}{{/if}}"><a href="/latest">Latest articles</a></li>
+            <li id="search" class="{{#if search}}{{style}}{{/if}}"><a href="/search">Search</a></li>
+            <li class="spacer"><img src="/icons/military_16-128_home.png" /> </li>
+            {{#if currentUser}}
+                <li id="post-article" class="{{#if create}}{{style}}{{/if}}"><a href="/article/create">Post Article</a></li>
+                <li id="profile" class="{{#if profile}}{{style}}{{/if}}"><a href="/users/profile/{{currentUser._id}}">My
+                    profile</a></li>
+                <li id="logout">
+                    <form id="logout-form" action="/users/logout" method="POST"></form>
+                    <a href="javascript:document.getElementById('logout-form').submit()">Logout</a>
+                </li>
+            {{else}}
+                <li id="register" class="{{#if register}}{{style}}{{/if}}"><a href="/users/register">Register</a></li>
+                <li id="login" class="{{#if login}}{{style}}{{/if}}"><a href="/users/login">Login</a></li>
+            {{/if}}
+        </ul>
+
         {{#if currentUser}}
-            <li id="post-article" class="{{#if create}}{{style}}{{/if}}"><a href="/article/create">Post Article</a></li>
-            <li id="profile" class="{{#if profile}}{{style}}{{/if}}"><a href="/users/profile/{{currentUser._id}}">My
-                profile</a></li>
-            <li id="logout">
-                <form id="logout-form" action="/users/logout" method="POST"></form>
-                <a href="javascript:document.getElementById('logout-form').submit()">Logout</a>
-            </li>
-        {{else}}
-            <li id="register" class="{{#if register}}{{style}}{{/if}}"><a href="/users/register">Register</a></li>
-            <li id="login" class="{{#if login}}{{style}}{{/if}}"><a href="/users/login">Login</a></li>
+            <div class="user-absolute-block">
+                <div>Logged company: {{currentUser.company}}</div>
+                <div><img src='{{currentUser.avatar}}' class='avatar-user-block'/></div>
+            </div>
         {{/if}}
-    </ul>
-
-    {{#if currentUser}}
-        <div class="user-absolute-block">
-            <div>Logged company: {{currentUser.company}}</div>
-            <div><img src='{{currentUser.avatar}}' class='avatar-user-block'/></div>
-        </div>
-    {{/if}}
+    </div>
 
     {{#if globalError}}
         <div class="global-error">{{globalError}}</div>
     {{/if}}
     {{{body}}}
 </div>
+<footer class="flex">
+    <div>created by: <span>Cvetan Petkov</span></div>
+
+    <div>
+        <div>email: <span>cvetanpetkov83@gmail.com</span></div>
+        <div>github: <span><a href="https://github.com/cvetanpetkov/planes.bg" target="_blank">github.com/CvetanPetkov</a></span></div>
+    </div>
+
+    <div>
+        used technologies:
+        <div class="padded">environment - <span>Node JS with Express</span></div>
+        <div class="padded">database - <span>MongoDB with Mongoose</span></div>
+        <div class="padded">template system - <span>Handlebars</span></div>
+    </div>
+</footer>
 </body>
 </html>

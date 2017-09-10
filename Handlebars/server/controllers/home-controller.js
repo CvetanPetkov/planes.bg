@@ -22,7 +22,20 @@ module.exports = {
 
   },
   createGet: (req, res) => {
-    res.render('home/create', {create: true, style: 'selected'})
-  },
-  createPost: (req, res) => {}
+    let conditions = ['New', 'Used', 'Scrap']
+    let imagesCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    let categories = ['Glider', 'Civil', 'Military', 'Passenger', 'Transport', 'Other']
+    let engines = ['No', 'Shaft', 'Turbine', 'Reaction', 'Rocket']
+
+    let viewObj = {
+      create: true,
+      style: 'selected',
+      conditions: conditions,
+      imagesCount: imagesCount,
+      categories: categories,
+      engines: engines
+    }
+
+    res.render('home/create', viewObj)
+  }
 }

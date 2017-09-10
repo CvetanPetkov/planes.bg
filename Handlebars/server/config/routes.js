@@ -27,7 +27,7 @@ module.exports = (app) => {
   app.get('/search', controllers.home.searchGet)
   app.post('/search', controllers.home.searchPost)
   app.get('/article/create', auth.isAuthenticated, controllers.home.createGet)
-  app.post('/article/create', auth.isAuthenticated, controllers.home.createPost)
+  app.post('/article/create', auth.isAuthenticated, controllers.plane.createPost)
 
   app.get('/users/register', controllers.users.registerGet)
   app.post('/users/register', upload.single('avatar'), controllers.users.registerPost)
@@ -47,7 +47,6 @@ module.exports = (app) => {
 
   app.get('/article/plane/all', controllers.plane.allGet)
   app.get('/article/plane/:plane', auth.isAuthenticated, controllers.plane.singleGet)
-  app.get('/article/plane/create', auth.isAuthenticated, controllers.plane.createGet)
   app.post('/article/plane/create', auth.isAuthenticated, upload.array('image', 12), controllers.plane.createPost)
   app.get('/article/plane/:plane/accessories', auth.isAuthenticated, controllers.plane.accessoriesAllGet)
   app.post('/article/plane/:plane/accessories', auth.isAuthenticated, controllers.plane.accessoryPost)
