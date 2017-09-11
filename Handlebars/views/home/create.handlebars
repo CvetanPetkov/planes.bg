@@ -85,35 +85,40 @@
 
                 <div class="input-wrapper">
                     <label for="hoursToMaintenance">Hours to maintenance:</label>
-                    <input type="number" min="0" max="10000" name="hoursToMaintenance" id="hoursToMaintenance" placeholder="Hours to maintenance" value="{{hoursToMaintenance}}" />
+                    <input type="number" min="0" max="10000" name="hoursToMaintenance" id="hoursToMaintenance"
+                           placeholder="Hours to maintenance" value="{{hoursToMaintenance}}"/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="inStock">Available quantity:</label>
-                    <input type="number" min="0" max="1000" name="inStock" id="inStock" placeholder="Available quantity" value="{{inStock}}" />
+                    <input type="number" min="0" max="1000" name="inStock" id="inStock" placeholder="Available quantity"
+                           value="{{inStock}}"/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="crew">Crew quantity:</label>
-                    <input type="number" min="0" max="100" name="crew" id="crew" placeholder="Crew quantity" value="{{crew}}" />
+                    <input type="number" min="0" max="100" name="crew" id="crew" placeholder="Crew quantity"
+                           value="{{crew}}"/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="enginesCount">Engines count:</label>
-                    <input type="number" min="0" max="100" name="enginesCount" id="enginesCount" placeholder="Engines count" value="{{enginesCount}}" />
+                    <input type="number" min="0" max="100" name="enginesCount" id="enginesCount"
+                           placeholder="Engines count" value="{{enginesCount}}"/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="passengersCount">Passengers count:</label>
-                    <input type="number" min="0" max="1000" name="passengersCount" id="passengersCount" placeholder="Passengers count" value="{{passengersCount}}" />
+                    <input type="number" min="0" max="1000" name="passengersCount" id="passengersCount"
+                           placeholder="Passengers count" value="{{passengersCount}}"/>
                 </div>
 
                 <div class="checkbox-wrapper">
                     <label for="radar">Radar:</label>
-                    <input type="checkbox" name="radar" id="radar" />
+                    <input type="checkbox" name="radar" id="radar"/>
 
                     <label for="transponder">Transponder:</label>
-                    <input type="checkbox" name="transponder" id="transponder" />
+                    <input type="checkbox" name="transponder" id="transponder"/>
                 </div>
 
                 <div class="input-wrapper plane-add-accessory">
@@ -217,6 +222,23 @@
     }
 
     function showAccessoryForm () {
-        console.log('accessory form')
+        let accessoryPartial = `{{> addAccessory}}`
+
+        if (document.getElementsByClassName('addAccessory-container').length < 1) {
+            document.getElementById('body').insertAdjacentHTML('afterbegin', accessoryPartial)
+        }
+    }
+
+    function hideAccessoryForm () {
+        let accessoryPartial = document.getElementsByClassName('addAccessory-container')[0]
+
+        if (document.getElementsByClassName('addAccessory-container').length > 0) {
+            document.getElementById('body').removeChild(accessoryPartial)
+        }
+    }
+
+    function addCategoryToRequest (el) {
+        console.log('Not implemented yet!')
+        hideAccessoryForm()
     }
 </script>

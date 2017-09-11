@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-html, body {
+html {
     height: 100%;
+}
+
+body {
+    min-height: 100%;
 }
 
 body {
@@ -15,6 +19,8 @@ body {
 .container {
     flex: 1 0 auto;
 }
+
+/*HEADER START*/
 
 .container-header {
     background: url('/images/header-background.jpg');
@@ -103,6 +109,19 @@ body {
 .avatar-holder {
     position: relative;
 }
+
+.global-error {
+    display: inline-block;
+    color: white;
+    padding: 5px 10px;
+    background: #ff0000;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+/*HEADER END*/
+/*FORMS START*/
 
 .login-form {
     width: 305px;
@@ -206,16 +225,6 @@ input[type="file"] {
     border: none;
 }
 
-.global-error {
-    display: inline-block;
-    color: white;
-    padding: 5px 10px;
-    background: #ff0000;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-}
-
 .company-error {
     display: none;
     margin-left: 100px;
@@ -223,18 +232,21 @@ input[type="file"] {
     color: red;
 }
 
+/*FORMS END*/
+/*CREATE ARTICLE START*/
+
 .create-content {
     flex-flow: row wrap;
 }
 
 .create-content aside {
-    flex: 0 0 25%;
+    flex: 0 0 20%;
     padding-left: 40px;
     border-right: solid 4px #ffffff;
 }
 
 .create-content main {
-    flex: 1 75%;
+    flex: 1 80%;
 }
 
 .btn-div {
@@ -253,7 +265,54 @@ input[type="file"] {
     text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.6);
 }
 
+/*add accessory container start*/
 
+.addAccessory-container {
+    min-width: 100%;
+    min-height: 100%;
+    position: fixed;
+}
+
+.addAccessory-container-inner {
+    width: 512px;
+    height: 512px;
+    border: solid 2px #696969;
+    border-radius: 20px;
+    background: #7988f1;
+    opacity: 0.95;
+    padding: 5px 20px 20px 20px;
+    position: absolute;
+    top: calc(50% - 256px);
+    left: calc(50% - 256px);
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.addAccessory-container-inner div:first-child {
+    color: #ffffff;
+    text-align: right;
+    font-size: 1.5rem;
+}
+
+.addAccessory-container-inner div:last-child {
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+#close-btn {
+    cursor: pointer;
+    padding: 3px;
+}
+
+#add-category-btn {
+    cursor: pointer;
+}
+
+/*add accessory container end*/
+/*CREATE ARTICLE END*/
+/*FOOTER START*/
 
 footer {
     margin-top: 20px;
