@@ -25,7 +25,8 @@ module.exports = {
     let conditions = ['New', 'Used', 'Scrap']
     let imagesCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     let categories = ['Glider', 'Civil', 'Military', 'Passenger', 'Transport', 'Other']
-    let engines = ['No', 'Shaft', 'Turbine', 'Reaction', 'Rocket']
+    let engines = ['No engine', 'Shaft', 'Turbine', 'Reaction', 'Rocket']
+    let accessoryTypes = ['Missile', 'Bomb', 'Container']
 
     let viewObj = {
       create: true,
@@ -33,7 +34,8 @@ module.exports = {
       conditions: conditions,
       imagesCount: imagesCount,
       categories: categories,
-      engines: engines
+      engines: engines,
+      accessoryTypes: accessoryTypes
     }
 
     res.render('home/create', viewObj)

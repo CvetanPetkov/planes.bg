@@ -227,9 +227,14 @@ input[type="file"] {
 
 .company-error {
     display: none;
-    margin-left: 100px;
+    margin-left: 115px;
     font-size: small;
     color: red;
+}
+
+.clarificationAcsryAdd {
+    font-size: small;
+    margin-top: 10px;
 }
 
 /*FORMS END*/
@@ -285,20 +290,21 @@ input[type="file"] {
     top: calc(50% - 256px);
     left: calc(50% - 256px);
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
-.addAccessory-container-inner div:first-child {
+.addAccessory-container-inner>div:first-child {
     color: #ffffff;
     text-align: right;
     font-size: 1.5rem;
 }
 
-.addAccessory-container-inner div:last-child {
+.addAccessory-container-inner>div:last-child {
     color: #ffffff;
-    text-align: center;
     font-size: 1.5rem;
     text-transform: uppercase;
+    margin-top: auto;
+    align-self: center;
 }
 
 #close-btn {
@@ -308,6 +314,52 @@ input[type="file"] {
 
 #add-category-btn {
     cursor: pointer;
+}
+
+.input-wrapper-column {
+    margin: 20px 0 0;
+    align-self: center;
+}
+
+.input-wrapper-column label {
+    color: #ffffff;
+    width: 110px;
+}
+
+.input-wrapper-column input,
+.input-wrapper-column select {
+    width: 200px;
+    padding: 5px;
+    border: solid 1px #696969;
+    border-radius: 0 7px 7px 0;
+    background: #eaf0f1;
+    outline: none;
+}
+
+#items {
+    border: solid 2px #696969;
+    padding: 10px;
+    overflow: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#items::-webkit-scrollbar {
+    width: 10px;
+}
+
+#items::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #696969;
+}
+
+#items>div {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#items>div:hover {
+    color: #ffffff;
 }
 
 /*add accessory container end*/

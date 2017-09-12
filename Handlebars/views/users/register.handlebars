@@ -57,9 +57,11 @@
     let httpRequest
 
     function checkCompanyExists (el) {
+        let url = '/users/register/checkCompany'
+
         httpRequest = new XMLHttpRequest()
         httpRequest.onreadystatechange = handleData
-        httpRequest.open('POST', '/users/register/checkCompany')
+        httpRequest.open('POST', url)
         httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
         httpRequest.send(el.name + '=' + encodeURIComponent(el.value))
     }

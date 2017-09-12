@@ -1,6 +1,19 @@
 <article class="addAccessory-container">
     <div class="addAccessory-container-inner flex">
         <div><span id="close-btn" onclick="hideAccessoryForm()">x</span></div>
-        <div><span id="add-category-btn" onclick="addCategoryToRequest(this)">add selected category</span></div>
+
+        <div class="input-wrapper-column">
+            <label>Select accessory type: </label>
+            <select name="accessoryType" onchange="getSelectedTypeItems(this)">
+                <option value="null" selected>Select accessory type</option>
+                {{#each accessoryTypes}}
+                    <option value="{{@index}}">{{this}}</option>
+                {{/each}}
+            </select>
+        </div>
+
+        <div id="items"></div>
+
+        <div><span id="add-category-btn" onclick="addAccessoryToRequest(this)">add selected accessories</span></div>
     </div>
 </article>

@@ -43,7 +43,7 @@ module.exports = (app) => {
   app.get('/users/profile/PurchaseHistory', auth.isAuthenticated, controllers.users.purchHistoryGet)
   app.delete('/users/delete', controllers.users.deleteUser)
 
-  app.get('/category/:category', controllers.category.categoryProductsGet)
+  app.get('/category/:categoryIndex', controllers.category.categoryProductsGet)
 
   app.get('/article/plane/all', controllers.plane.allGet)
   app.get('/article/plane/:plane', auth.isAuthenticated, controllers.plane.singleGet)

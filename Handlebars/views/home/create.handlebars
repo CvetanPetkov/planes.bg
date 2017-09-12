@@ -6,7 +6,7 @@
     </aside>
 
     <main id="plane" style="display: none">
-        <form action="/users/register" method="POST" enctype="multipart/form-data" class="create-form flex">
+        <form action="/article/plane/create" method="POST" enctype="multipart/form-data" class="create-form flex">
             <fieldset>
                 <p>Required fields</p>
 
@@ -29,7 +29,7 @@
 
                 <div class="input-wrapper">
                     <label>Condition:</label>
-                    <select>
+                    <select name="condition">
                         <option value="null" selected>Select condition</option>
                         {{#each conditions}}
                             <option value="{{@index}}">{{this}}</option>
@@ -65,7 +65,7 @@
 
                 <div class="input-wrapper">
                     <label>Category:</label>
-                    <select>
+                    <select name="category">
                         <option value="null" selected>Select category</option>
                         {{#each categories}}
                             <option value="{{@index}}">{{this}}</option>
@@ -75,7 +75,7 @@
 
                 <div class="input-wrapper">
                     <label>Engine:</label>
-                    <select>
+                    <select name="engine">
                         <option value="null" selected>Select engine type</option>
                         {{#each engines}}
                             <option value="{{@index}}">{{this}}</option>
@@ -122,8 +122,9 @@
                 </div>
 
                 <div class="input-wrapper plane-add-accessory">
-                    <span>Add accessory now?</span>
+                    <span>Attach accessory now?</span>
                     <button type="button" onclick="showAccessoryForm()">YES</button>
+                    <div class="clarificationAcsryAdd">*You can attach more than one accessory!</div>
                 </div>
             </fieldset>
 
@@ -132,9 +133,9 @@
             </fieldset>
         </form>
     </main>
-
+    {{locals.isAdmin}}
     <main id="accessory" style="display: none">
-        <form action="/users/register" method="POST" enctype="multipart/form-data" class="create-form flex">
+        <form action="/article/accessory/create" method="POST" enctype="multipart/form-data" class="create-form flex">
             <fieldset>
                 <p>Optional fields</p>
 
@@ -237,8 +238,39 @@
         }
     }
 
-    function addCategoryToRequest (el) {
-        console.log('Not implemented yet!')
+    function addAccessoryToRequest (el) {
+        console.log(el)
         hideAccessoryForm()
+    }
+
+    function getSelectedTypeItems (el) {
+        let selectedType = el.value
+        let url = `/category/${selectedType}`
+
+        httpRequest = new XMLHttpRequest()
+        httpRequest.onreadystatechange = handleCategorySelectedData
+        httpRequest.open('GET', url)
+        httpRequest.send()
+    }
+
+    function handleCategorySelectedData () {
+        if (httpRequest.readyState === 4) {
+            let res = JSON.parse(httpRequest.response)
+
+            if (res.length > 0) {
+                let element = document.getElementById('items')
+                let html = ''
+
+                for (let item of res) {
+                    let model = item.model
+                    let description = item.description
+                    html += `<div>${model} - ${description}</div>`
+                }
+
+                element.innerHTML = ''
+                element.insertAdjacentHTML('afterbegin', html)
+            }
+        }
+
     }
 </script>
