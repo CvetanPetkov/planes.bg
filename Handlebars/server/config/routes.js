@@ -57,7 +57,7 @@ module.exports = (app) => {
   app.delete('/article/plane/:plane', auth.isAuthenticated, controllers.plane.deletePlane)
 
   app.get('/article/accessory/all', controllers.accessory.allGet)
-  app.get('/article/accessory/:accessory', auth.isAuthenticated, controllers.accessory.singleGet)
+  app.get('/article/accessory/:accessoryIndex', auth.isAuthenticated, controllers.accessory.accessoryProductsGet)
   app.post('/article/accessory/create', auth.isAuthenticated, upload.array('image', 12), controllers.accessory.createPost)
   app.get('/article/accessory/linked', auth.isAuthenticated, controllers.accessory.linkedGet)
   app.delete('/article/accessory/:accessory', auth.isAuthenticated, controllers.accessory.deleteAccessory)

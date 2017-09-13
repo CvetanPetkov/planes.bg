@@ -312,7 +312,7 @@ input[type="file"] {
     padding: 3px;
 }
 
-#add-category-btn {
+#add-accessory-btn {
     cursor: pointer;
 }
 
@@ -359,6 +359,35 @@ input[type="file"] {
 }
 
 #items>div:hover {
+    color: #ffffff;
+    position: relative;
+}
+
+#items>div:not(.selected):hover::after {
+    content: "select this accessory";
+    padding: 5px 7px;
+    background: #eaf0f1;
+    font-size: 0.7rem;
+    font-weight: bolder;
+    color: #696969;
+    position: absolute;
+    left: 100px;
+    top: -1.5rem;
+}
+
+#items>div.selected:hover::after {
+    content: "remove this accessory";
+    padding: 5px 7px;
+    background: red;
+    font-size: 0.7rem;
+    font-weight: bolder;
+    color: #ffffff;
+    position: absolute;
+    left: 100px;
+    top: -1.5rem;
+}
+
+#items .selected {
     color: #ffffff;
 }
 

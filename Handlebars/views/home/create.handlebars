@@ -126,6 +126,8 @@
                     <button type="button" onclick="showAccessoryForm()">YES</button>
                     <div class="clarificationAcsryAdd">*You can attach more than one accessory!</div>
                 </div>
+
+                <input type="hidden" name="accessoryData" id="accessory-data"/>
             </fieldset>
 
             <fieldset>
@@ -133,7 +135,7 @@
             </fieldset>
         </form>
     </main>
-    {{locals.isAdmin}}
+
     <main id="accessory" style="display: none">
         <form action="/article/accessory/create" method="POST" enctype="multipart/form-data" class="create-form flex">
             <fieldset>
@@ -238,19 +240,77 @@
         }
     }
 
-    function addAccessoryToRequest (el) {
-        console.log(el)
-        hideAccessoryForm()
-    }
+    let stateController = (() => {
+        let state = []
+
+        let addAccessoryToState = (el) => {
+            if (el.getAttribute('type') === 'accessoryItem') {
+                let id = el.getAttribute('id')
+
+                let accessoryObj = {
+                    _id: id
+                }
+
+                state.push(accessoryObj)
+                document.getElementById(id).className = 'selected'
+                document.getElementById(id).setAttribute('onclick', 'stateController.removeAccessoryFromState(this)')
+            }
+            console.log(state)
+        }
+
+        let removeAccessoryFromState = (el) => {
+            if (el.getAttribute('type') === 'accessoryItem') {
+                let id = el.getAttribute('id')
+
+                state.forEach((obj, i) => {
+                    if (obj._id.toString() === id.toString()) {
+                        state.splice(i, 1)
+                    }
+                })
+
+                document.getElementById(id).classList.remove('selected')
+                document.getElementById(id).setAttribute('onclick', 'stateController.addAccessoryToState(this)')
+            }
+            console.log(state)
+        }
+
+        let isSelectedAccessory = (id) => {
+            let val = false
+            state.forEach((obj) => {
+                if (obj._id.toString() === id.toString()) {
+                    val = true
+                }
+            })
+            return val
+        }
+
+        let addSelectedAccessories = () => {
+            let accessoryContainer = document.getElementById('accessory-data')
+            accessoryContainer.setAttribute('value', JSON.stringify(state))
+            console.log(accessoryContainer.value)
+
+            hideAccessoryForm()
+        }
+
+        return {
+            addAccessoryToState: addAccessoryToState,
+            removeAccessoryFromState: removeAccessoryFromState,
+            isSelectedAccessory: isSelectedAccessory,
+            addSelectedAccessories: addSelectedAccessories
+        }
+    })()
 
     function getSelectedTypeItems (el) {
         let selectedType = el.value
-        let url = `/category/${selectedType}`
 
-        httpRequest = new XMLHttpRequest()
-        httpRequest.onreadystatechange = handleCategorySelectedData
-        httpRequest.open('GET', url)
-        httpRequest.send()
+        if (selectedType) {
+            let url = `/article/accessory/${selectedType}`
+
+            httpRequest = new XMLHttpRequest()
+            httpRequest.onreadystatechange = handleCategorySelectedData
+            httpRequest.open('GET', url)
+            httpRequest.send()
+        }
     }
 
     function handleCategorySelectedData () {
@@ -262,15 +322,20 @@
                 let html = ''
 
                 for (let item of res) {
+                    let id = item._id
                     let model = item.model
                     let description = item.description
-                    html += `<div>${model} - ${description}</div>`
+
+                    if (stateController.isSelectedAccessory(id)) {
+                        html += `<div class="selected" type="accessoryItem" id="${id}" onclick="stateController.removeAccessoryFromState(this)">${model} - ${description}</div>`
+                    } else {
+                        html += `<div type="accessoryItem" id="${id}" onclick="stateController.addAccessoryToState(this)">${model} - ${description}</div>`
+                    }
                 }
 
                 element.innerHTML = ''
                 element.insertAdjacentHTML('afterbegin', html)
             }
         }
-
     }
 </script>
