@@ -6,14 +6,74 @@ const fs = require('fs')
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
-      let newDir = `./public/avatars/${req.body.firstName}_${req.body.lastName}_${Date.now()}`
-      fs.mkdir(newDir, (err) => {
-        if (err) {
-          console.log(err)
-        }
-      })
+      let newDir = ''
+      let regex = /[\/|\\*|\\\\|:|\\?|<|>|"|\||\s]/g
 
-      cb(null, newDir)
+      switch (req.url) {
+        case '/users/register':
+          newDir = `./public/avatars/${req.body.firstName}_${req.body.lastName}_${Date.now()}`
+          fs.mkdir(newDir, (err) => {
+            if (err) {
+              console.log(err)
+            }
+          })
+          cb(null, newDir)
+          break
+        case '/article/plane/create':
+          fs.readdir(`./public/articleImages/plane/`, (err, dirs) => {
+            if (err) {
+              console.log(`readdir err ${err}`)
+            } else {
+              let manufacturer = req.body.manufacturer.replace(regex, '-')
+              let model = req.body.model.replace(regex, '-')
+
+              dirs.forEach(dir => {
+                if (dir.startsWith(`${manufacturer}_${model}_`)) {
+                  newDir = `./public/articleImages/plane/${dir}`
+                }
+              })
+              if (!newDir) {
+                newDir = `./public/articleImages/plane/${manufacturer}_${model}_${Date.now()}`
+                fs.mkdir(newDir, (err) => {
+                  if (err) {
+                    console.log(`mkdir err ${err}`)
+                  }
+                })
+              }
+
+              cb(null, newDir)
+            }
+          })
+          break
+        case '/article/accessory/create':
+          fs.readdir(`./public/articleImages/accessory/`, (err, dirs) => {
+            if (err) {
+              console.log(`readdir err ${err}`)
+            } else {
+              let manufacturer = req.body.acsManufacturer.replace(regex, '-')
+              let model = req.body.acsModel.replace(regex, '-')
+
+              dirs.forEach(dir => {
+                if (dir.startsWith(`${manufacturer}_${model}_`)) {
+                  newDir = `./public/articleImages/accessory/${dir}`
+                }
+              })
+              if (!newDir) {
+                newDir = `./public/articleImages/accessory/${manufacturer}_${model}_${Date.now()}`
+                fs.mkdir(newDir, (err) => {
+                  if (err) {
+                    console.log(`mkdir err ${err}`)
+                  }
+                })
+              }
+
+              cb(null, newDir)
+            }
+          })
+          break
+        default:
+          console.log('Invalid request url in image upload!')
+      }
     } else {
       return console.log('opaa')
     }
@@ -27,7 +87,6 @@ module.exports = (app) => {
   app.get('/search', controllers.home.searchGet)
   app.post('/search', controllers.home.searchPost)
   app.get('/article/create', auth.isAuthenticated, controllers.home.createGet)
-  app.post('/article/create', auth.isAuthenticated, controllers.plane.createPost)
 
   app.get('/users/register', controllers.users.registerGet)
   app.post('/users/register', upload.single('avatar'), controllers.users.registerPost)
@@ -57,7 +116,7 @@ module.exports = (app) => {
   app.delete('/article/plane/:plane', auth.isAuthenticated, controllers.plane.deletePlane)
 
   app.get('/article/accessory/all', controllers.accessory.allGet)
-  app.get('/article/accessory/:accessoryIndex', auth.isAuthenticated, controllers.accessory.accessoryProductsGet)
+  app.get('/article/accessory/:accessoryType', auth.isAuthenticated, controllers.accessory.accessoryProductsGet)
   app.post('/article/accessory/create', auth.isAuthenticated, upload.array('image', 12), controllers.accessory.createPost)
   app.get('/article/accessory/linked', auth.isAuthenticated, controllers.accessory.linkedGet)
   app.delete('/article/accessory/:accessory', auth.isAuthenticated, controllers.accessory.deleteAccessory)

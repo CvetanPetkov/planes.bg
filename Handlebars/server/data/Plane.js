@@ -24,10 +24,10 @@ let planeSchema = new mongoose.Schema({
     type: types.ObjectId,
     ref: 'Category'
   }],
-  condition: [{
+  condition: {
     type: types.String,
     required: REQUIRED_VALIDATION_MESSAGE
-  }],
+  },
   airHours: {
     type: Number,
     min: 0,

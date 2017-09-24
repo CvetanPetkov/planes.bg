@@ -54,6 +54,7 @@ body {
 .avatar-user-block {
     max-width: 150px;
     max-height: 70px;
+    margin-top: 10px;
 }
 
 .menu {
@@ -337,7 +338,6 @@ input[type="file"] {
 }
 
 #items {
-    border: solid 2px #696969;
     padding: 10px;
     overflow: auto;
     margin-top: 20px;

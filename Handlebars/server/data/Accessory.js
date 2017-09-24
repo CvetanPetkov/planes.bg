@@ -8,8 +8,9 @@ let accessorySchema = new mongoose.Schema({
     type: types.String,
     required: REQUIRED_VALIDATION_MESSAGE
   },
-  type: {
-    type: types.String,  //  ['missile', 'bomb', 'container']
+  accessoryType: {
+    type: types.ObjectId,
+    ref: 'AccessoryType',
     required: REQUIRED_VALIDATION_MESSAGE
   },
   model: {
@@ -24,10 +25,10 @@ let accessorySchema = new mongoose.Schema({
     type: types.String,
     default: '/articleImages/default-image_450.png'
   }],
-  condition: [{
-    type: types.String,  //  ['New', 'Used', 'Scrap']
+  condition: {
+    type: types.String,
     required: REQUIRED_VALIDATION_MESSAGE
-  }],
+  },
   price: {
     type: Number,
     min: 0,

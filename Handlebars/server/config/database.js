@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const User = require('../data/User')
+const Category = require('../data/Category')
+const AccessoryType = require('../data/AccessoryType')
 
 require('../data/Accessory')
 require('../data/Category')
@@ -23,6 +25,8 @@ module.exports = (settings) => {
     console.log('MongoDB ready!')
 
     User.seedAdminUser()
+    Category.seedCategories()
+    AccessoryType.seedAccessoryTypes()
   })
 
   db.on('error', err => console.log(`Database error: ${err}`))

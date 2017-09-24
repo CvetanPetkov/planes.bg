@@ -11,12 +11,21 @@ let categorySchema = new mongoose.Schema({
   planes: [{
     type: types.ObjectId,
     ref: 'Plane'
-  }],
-  creator: {
-    type: types.ObjectId,
-    ref: 'User'
-  }
+  }]
 }, {timestamps: true})
 
 let Category = mongoose.model('Category', categorySchema)
 module.exports = Category
+
+module.exports.seedCategories = () => {
+  Category.find({}).then(categories => {
+    if (categories.length > 0) return
+    let categoriesArr = ['Glider', 'Civil', 'Military', 'Passenger', 'Transport', 'Other']
+
+    for (let category of categoriesArr) {
+      Category.create({
+        name: category
+      })
+    }
+  })
+}

@@ -13,23 +13,22 @@
                 <div class="input-wrapper">
                     <label for="manufacturer">Manufacturer:</label>
                     <input type="text" name="manufacturer" id="manufacturer" placeholder="Manufacturer"
-                           value="{{manufacturer}}"/>
+                           value="{{manufacturer}}" required/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="model">Model name:</label>
-                    <input type="text" name="model" id="model" placeholder="Model name" value="{{model}}"/>
+                    <input type="text" name="model" id="model" placeholder="Model name" value="{{model}}" required/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="description" style="display: block">Description:</label>
-                    <textarea maxlength="1000" name="description" id="description" placeholder="Description"
-                              value="{{description}}"></textarea>
+                    <textarea minlength="100" maxlength="1000" name="description" id="description" placeholder="Description" required>{{description}}</textarea>
                 </div>
 
                 <div class="input-wrapper">
                     <label>Condition:</label>
-                    <select name="condition">
+                    <select name="condition" required>
                         <option value="null" selected>Select condition</option>
                         {{#each conditions}}
                             <option value="{{@index}}">{{this}}</option>
@@ -39,25 +38,13 @@
 
                 <div class="input-wrapper">
                     <label for="airHours">Air hours:</label>
-                    <input type="number" name="airHours" id="airHours" placeholder="Air hours" value="{{airHours}}"/>
+                    <input min="0" type="number" name="airHours" id="airHours" placeholder="Air hours" value="{{airHours}}" required/>
                 </div>
 
                 <div class="input-wrapper">
                     <label for="price">Price -> EUR:</label>
-                    <input type="number" name="price" id="price" placeholder="Price in EUR" value="{{price}}"/>
+                    <input min="0" type="number" name="price" id="price" placeholder="Price in EUR" value="{{price}}" required/>
                 </div>
-
-                <div class="input-wrapper">
-                    <label>Images count:</label>
-                    <select onchange="selectedCount(this)">
-                        <option value="null" selected>Select number</option>
-                        {{#each imagesCount}}
-                            <option value="{{this}}">{{this}}</option>
-                        {{/each}}
-                    </select>
-                </div>
-
-                <div id="imagesUpload" class="input-wrapper"></div>
             </fieldset>
 
             <fieldset>
@@ -68,7 +55,7 @@
                     <select name="category">
                         <option value="null" selected>Select category</option>
                         {{#each categories}}
-                            <option value="{{@index}}">{{this}}</option>
+                            <option value="{{this._id}}">{{this.name}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -128,6 +115,18 @@
                 </div>
 
                 <input type="hidden" name="accessoryData" id="accessory-data"/>
+
+                <div class="input-wrapper">
+                    <label>Images count:</label>
+                    <select onchange="selectedCount(this, 'plane-imagesUpload')">
+                        <option value="null" selected>Select number</option>
+                        {{#each imagesCount}}
+                            <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div id="plane-imagesUpload" class="input-wrapper"></div>
             </fieldset>
 
             <fieldset>
@@ -139,33 +138,49 @@
     <main id="accessory" style="display: none">
         <form action="/article/accessory/create" method="POST" enctype="multipart/form-data" class="create-form flex">
             <fieldset>
-                <p>Optional fields</p>
+                <p>Required fields</p>
 
 
                 <div class="input-wrapper">
-                    <label for="firstName">First name:</label>
-                    <input type="text" name="firstName" id="firstName" placeholder="First name" value="{{firstName}}"/>
+                    <label for="acsManufacturer">Manufacturer:</label>
+                    <input type="text" name="acsManufacturer" id="acsManufacturer" placeholder="Manufacturer"
+                           value="{{acsManufacturer}}" required/>
                 </div>
 
                 <div class="input-wrapper">
-                    <label for="lastName">Last name:</label>
-                    <input type="text" name="lastName" id="lastName" placeholder="Last name" value="{{lastName}}"/>
+                    <label>Type: </label>
+                    <select name="accessoryType" required>
+                        <option value="" selected>Select accessory type</option>
+                        {{#each accessoryTypes}}
+                            <option value="{{this._id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select>
                 </div>
 
                 <div class="input-wrapper">
-                    <label for="company">Company:</label>
-                    <input type="text" name="company" id="company" placeholder="Company" value="{{company}}"/>
+                    <label for="svdModel">Model:</label>
+                    <input type="text" name="acsModel" id="acsModel" placeholder="Model"
+                           value="{{acsModel}}" required/>
                 </div>
 
                 <div class="input-wrapper">
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" id="password" placeholder="Password" value="{{password}}"/>
+                    <label for="acsDescription" style="display: block">Description:</label>
+                    <textarea minlength="100" maxlength="1000" name="acsDescription" id="acsDescription" placeholder="Description" required>{{acsDescription}}</textarea>
                 </div>
 
                 <div class="input-wrapper">
-                    <label for="confirmPassword">Confirm password:</label>
-                    <input type="password" name="confirmPassword" id="ConfirmPassword" placeholder="Confirm password"
-                           value="{{confirmPassword}}"/>
+                    <label>Condition:</label>
+                    <select name="condition" required>
+                        <option value="null" selected>Select condition</option>
+                        {{#each conditions}}
+                            <option value="{{@index}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="acsPrice">Price -> EUR:</label>
+                    <input min="0" type="number" name="acsPrice" id="acsPrice" placeholder="Price in EUR" value="{{acsPrice}}" required/>
                 </div>
             </fieldset>
 
@@ -173,24 +188,26 @@
                 <p>Optional fields</p>
 
                 <div class="input-wrapper">
-                    <label for="location">Location:</label>
-                    <input type="text" name="location" id="location" placeholder="Location/Address"
-                           value="{{location}}"/>
+                    <label>Images count:</label>
+                    <select onchange="selectedCount(this, 'accessory-imagesUpload')">
+                        <option value="null" selected>Select number</option>
+                        {{#each imagesCount}}
+                            <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
                 </div>
 
-                <div class="input-wrapper">
-                    <label for="avatar">Avatar:</label>
-                    <input type="file" accept="image/*" name="avatar" id="avatar"/>
-                </div>
+                <div id="accessory-imagesUpload" class="input-wrapper"></div>
             </fieldset>
 
             <fieldset>
-                <input type="submit" value="Register"/>
+                <input type="submit" value="Create"/>
             </fieldset>
         </form>
     </main>
 </div>
 
+<!--SEPARATE JAVASCRIPT FROM THE VIEW-->
 <script>
     function switchDisplay (el) {
         switch (el.getAttribute('data-value')) {
@@ -207,7 +224,8 @@
         }
     }
 
-    function selectedCount (el) {
+    function selectedCount (el, typeId) {
+      console.log(el.value)
         let imagesCount = el.value
         let html = ``
 
@@ -215,11 +233,11 @@
             html += `
                 <div class="input-wrapper">
                     <label for="image${i}">Image${i}: </label>
-                    <input type="file" accept="image/*" name="image${i}" id="image${i}"/>
+                    <input type="file" accept="image/*" name="image" id="image${i}" required/>
                 </div>`
         }
 
-        let element = document.getElementById('imagesUpload')
+        let element = document.getElementById(typeId)
         element.innerHTML = ''
         element.insertAdjacentHTML('afterbegin', html)
     }
@@ -327,9 +345,9 @@
                     let description = item.description
 
                     if (stateController.isSelectedAccessory(id)) {
-                        html += `<div class="selected" type="accessoryItem" id="${id}" onclick="stateController.removeAccessoryFromState(this)">${model} - ${description}</div>`
+                        html += `<div class="selected" type="accessoryItem" id="${id}" onclick="stateController.removeAccessoryFromState(this)">${model} - ${description.slice(0, 50)}...</div>`
                     } else {
-                        html += `<div type="accessoryItem" id="${id}" onclick="stateController.addAccessoryToState(this)">${model} - ${description}</div>`
+                        html += `<div type="accessoryItem" id="${id}" onclick="stateController.addAccessoryToState(this)">${model} - ${description.slice(0, 50)}...</div>`
                     }
                 }
 

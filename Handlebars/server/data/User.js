@@ -76,10 +76,6 @@ userSchema.method({
   }
 })
 
-userSchema.query.getUser = function (user) {
-  return this.findOne(user)
-}
-
 userSchema.query.getRefElement = function (user, ref) {
   return this.findOne(user).populate(ref)
 }

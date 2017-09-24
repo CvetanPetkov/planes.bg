@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const User = mongoose.model('User')
+const Category = mongoose.model('Category')
+const AccessoryType = mongoose.model('AccessoryType')
 
 const errorHandler = require('../utilities/error-handler')
 
@@ -24,20 +26,30 @@ module.exports = {
   createGet: (req, res) => {
     let conditions = ['New', 'Used', 'Scrap']
     let imagesCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    let categories = ['Glider', 'Civil', 'Military', 'Passenger', 'Transport', 'Other']
+    let categoriesArr = []
     let engines = ['No engine', 'Shaft', 'Turbine', 'Reaction', 'Rocket']
-    let accessoryTypes = ['Missile', 'Bomb', 'Container']
+    let accessoryTypes = []
 
-    let viewObj = {
-      create: true,
-      style: 'selected',
-      conditions: conditions,
-      imagesCount: imagesCount,
-      categories: categories,
-      engines: engines,
-      accessoryTypes: accessoryTypes
-    }
+    Category.find({})
+      .then(categories => {
+        categoriesArr = categories
 
-    res.render('home/create', viewObj)
+        AccessoryType.find({})
+          .then(acsTypes => {
+            accessoryTypes = acsTypes
+
+            let viewObj = {
+              create: true,
+              style: 'selected',
+              conditions: conditions,
+              imagesCount: imagesCount,
+              categories: categoriesArr,
+              engines: engines,
+              accessoryTypes: accessoryTypes
+            }
+
+            res.render('home/create', viewObj)
+          })
+      })
   }
 }
